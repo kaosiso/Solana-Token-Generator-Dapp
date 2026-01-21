@@ -5,7 +5,6 @@ import {
   HomeView,
   ToolView,
   FeatureView,
-  // OfferView,
   CreateView,
   TokenMetadata,
   ContactView,
@@ -61,13 +60,13 @@ const Home: NextPage = () => {
         </div>
       )}
 
-      {/*  {openTokenMetaData && (
+     {openTokenMetaData && (
         <div className="new_loader relative h-full bg-slate-900">
           <TokenMetadata setOpenTokenMetaData={setOpenTokenMetaData} />
         </div>
       )}
 
-      {openContact && (
+        {/* {openContact && (
         <div className="new_loader relative h-full bg-slate-900">
           <ContactView setopenContact={setOpenContact} />
         </div>
