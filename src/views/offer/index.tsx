@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-const OfferView: FC = () => {
+export const OfferView: FC = () => {
   return <section id="features" className="py-20" >
 <div className="container">
   <div className="mb-10 flex items-end justify-between">
