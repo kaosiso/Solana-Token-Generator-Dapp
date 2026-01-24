@@ -24,24 +24,18 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const network = networkConfiguration as WalletAdapterNetwork;
 
-  const originalendpoint = useMemo(
-    () =>
-      clusterApiUrl(
-        network === WalletAdapterNetwork.Mainnet
-          ? "mainnet-beta"
-          : network
-      ),
-    [network]
-  );
-
-  let endpoint;
-  if(network == "mainnet-beta"){
-    endpoint = "https://solana-mainnet.g.alchemy.com/v2/bmMCEheTEX6UoyG-80Ysb";
-  } else if (network == "devnet") {
-    endpoint = originalendpoint;
-  } else {
-    endpoint = originalendpoint
-  }
+  const endpoint = useMemo(() => {
+    switch (network) {
+      case WalletAdapterNetwork.Mainnet:
+        return "https://solana-mainnet.g.alchemy.com/v2/..."; // Mainnet RPC
+      case WalletAdapterNetwork.Devnet:
+        return clusterApiUrl("devnet"); // Devnet RPC
+      case WalletAdapterNetwork.Testnet:
+        return clusterApiUrl("testnet"); // Testnet RPC
+      default:
+        return clusterApiUrl("devnet"); // Fallback
+    }
+  }, [network]);
 
   const wallets = useMemo(
     () => [
@@ -52,16 +46,15 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     []
   );
 
-const onError = useCallback((error: WalletError) => {
-  notify({
-    type: "error",
-    message: error.message
-      ? `${error.name}: ${error.message}`
-      : error.name,
-  });
-  console.error(error);
-}, []);
-
+  const onError = useCallback((error: WalletError) => {
+    notify({
+      type: "error",
+      message: error.message
+        ? `${error.name}: ${error.message}`
+        : error.name,
+    });
+    console.error(error);
+  }, []);
 
   return (
     <ConnectionProvider endpoint={endpoint}>

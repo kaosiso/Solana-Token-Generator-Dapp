@@ -18,8 +18,7 @@ export const AirdropView: FC<AirdropViewProps> = ({ setOpenAirdrop }) => {
   const balance = useUserSOLBalanceStore((s) => s.balance);
   const { getUserSOLBalance } = useUserSOLBalanceStore();
 
-  // FIX: Only re-run if publicKey or connection changes. 
-  // Including the whole 'wallet' object often causes infinite loops.
+  
   useEffect(() => {
     if (publicKey) {
       getUserSOLBalance(publicKey, connection);
@@ -46,7 +45,6 @@ export const AirdropView: FC<AirdropViewProps> = ({ setOpenAirdrop }) => {
         txid: signature,
       });
 
-      // FIX: Changed comma to semicolon and ensured proper execution
       const latestBlockHash = await connection.getLatestBlockhash();
       await connection.confirmTransaction({
         blockhash: latestBlockHash.blockhash,
@@ -77,7 +75,6 @@ export const AirdropView: FC<AirdropViewProps> = ({ setOpenAirdrop }) => {
   );
 
   return (
-    // FIX: Added overflow-y-auto and max-h-screen to ensure the modal is scrollable
     <section className="fixed inset-0 z-50 flex h-full w-full items-start justify-center overflow-y-auto bg-black/50 py-6 px-0 lg:p-10">
       <div className="container">
         <div className="relative w-full rounded-2xl bg-default-950/40 backdrop-blur-2xl px-6 lg:px-10 my-6">
